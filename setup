@@ -1,0 +1,61 @@
+# Create Server MATER SERVER
+#come to root folder
+   sudo su - 
+#add user in root folder
+useradd ansadmin     
+passwd ansadmin     -add password like Appadmin1234@
+#ADD USER
+-visudo   
+>root =all below 
+> ansadmin ALL=(ALL)     NOPASSWD: ALL
+#key gen in root 
+ssh key-gen 
+#permission changes 
+> vi /etc/ssh/sshd_config   
+> PasswordAuthentication yes
+ #PermitEmptyPasswords no 
+ #PasswordAuthentication no > 
+ service sshd restart     -type this command
+#install ansbile
+  yum install python
+  sudo yum install epel-release
+  sudo yum update -y
+  yum install python-pip
+  sudo yum install ansible -y
+#  login into ansadmin root
+   sudo su -ansadmin
+   ssh-keygen    -keygen ansadmin root
+   # come to ansible login finally
+    cd /etc/ansible
+
+#SLAVE OR MANGER NODE SETUP
+#come to root folder
+   sudo su - 
+#add user in root folder
+useradd ansadmin     
+passwd ansadmin     -add password like Appadmin1234@
+#ADD USER
+-visudo   
+>root =all below 
+> ansadmin ALL=(ALL)     NOPASSWD: ALL
+#permission changes 
+> vi /etc/ssh/sshd_config   
+> PasswordAuthentication yes
+ #PermitEmptyPasswords no 
+ #PasswordAuthentication no >
+service sshd restart     -type this command
+ip addr -type this command
+take ip address
+
+# come to master server
+  sudo vi hosts 
+  ssh-copy-id "ip address"    - type this command
+  type password manger or slave password
+  
+  DONE 
+  #INSTALL GIT IN MASTER SERVER
+  ansible all -m yum -a "name=git" -b
+RUN THOSE APPLICATION SAME AS
+  
+
+  
