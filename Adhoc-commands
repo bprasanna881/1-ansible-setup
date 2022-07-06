@@ -1,0 +1,51 @@
+sudo su - ansadmin   -come to ansadmin user in master node
+cd /etc/ansible
+$ ansible all -m ping
+   # 10.0.0.8 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false,
+    "ping": "pong"
+ #command module all service status
+$ ansible all -m command -a "uptime"
+  10.0.0.8 | CHANGED | rc=0 >>
+  09:59:37 up 16 min,  2 users,  load average: 0.00, 0.08, 0.20
+$ ansible all -m command -a "hostname"
+10.0.0.8 | CHANGED | rc=0 >>
+node
+# stat command
+   $ ansible all -m stat -a "path=/etc/hosts"      -ansible all -m stat -a "filelocation"
+# yum 
+  yum install java -linux
+  apt install java - ubuntu
+$ ansible all -m yum -a "name=git" -b          -b(become root user)
+ansible user modules -search in google
+# user 
+ ansible all -m user -a "name=prasanna" -b
+  check into manger node see below
+  appadmin:x:1000:1000:Cloud User:/home/appadmin:/bin/bash
+  ansadmin:x:1001:1001::/home/ansadmin:/bin/bash
+  prasanna:x:1002:1002::/home/prasanna:/bin/bash
+# setup
+  $  ansible all -m setup          -total entier server information is capaturing
+
+$ ansible-doc -l  -modules list view
+
+$ cat hosts
+# create groups
+ [RHEL]
+ 10.0.0.8
+ [DUMMY]
+ 10.0.0.5
+ $ ansible all -m ping
+ $ ansible RHEL -m ping
+ ansible DUMMY -m ping
+ $  ansible all -m ping -i /home/ansadmin/hosts
+
+
+
+
+
+
+
