@@ -48,6 +48,7 @@ ip addr -type this command
 take ip address
 
 # come to master server
+ $ansadmin@master-server ansible     - come to ansible server like cd /etc/ansible
   sudo vi hosts    - add ip address manger or slave 
   ssh-copy-id "ip address"    - type this command
   type password manger or slave password
