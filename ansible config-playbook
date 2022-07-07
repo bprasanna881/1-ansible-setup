@@ -1,0 +1,42 @@
+$ cat ansible.cfg
+
+# create new configuration file or addition conf file
+ ansible all -m user -a "name=test33" -b normal we excute this command but we dont want "b" write config file
+ $ pwd
+/etc/ansible
+[ansadmin@master-server ansible]$ cd ~
+[ansadmin@master-server ~]$ pwd
+/home/ansadmin
+ vi ansible.cfg
+cd /home/ansadmin/
+sudo vi ansible.cfg
+ change file like [privilege_escalation]
+                  become=True
+ $ ansible all -m user -a "name=test33"  excution this command
+ 
+# ansuble module
+https://docs.ansible.com/ansible/latest/user_guide/modules.html
+
+# play books
+[ansadmin@master-server ~]$ ansible all -m user -a "name=test33"^C
+[ansadmin@master-server ~]$ cd /opt/
+[ansadmin@master-server opt]$ ls
+rh
+[ansadmin@master-server opt]$ sudo mkdir ansible
+[ansadmin@master-server opt]$ pwd
+/opt
+[ansadmin@master-server opt]$ cd ansible/
+[ansadmin@master-server ansible]$ ls
+[ansadmin@master-server ansible]$
+
+write play book
+---
+- hosts: all
+  become: true
+  tasks:
+  - user: name=appuser11
+  $ sudo vi create-user.yml
+  $ ansible-playbook create-user.yml
+  
+  check node server and enter this command $ cat /etc/passwd
+
