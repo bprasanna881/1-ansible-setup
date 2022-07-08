@@ -1,0 +1,112 @@
+# come to custmized hosts
+[ansadmin@master-server ansible]$ sudo vi ansible.cfg   change inventory = /opt/ansible/hosts remove must( # )  #inventory      = /opt/ansible/hosts
+
+[ansadmin@master-server ansible]$ cd /opt/ansible
+[ansadmin@master-server ansible]$ ls
+create-user.yml  hosts
+[ansadmin@master-server ansible]$ cat hosts
+[web]
+10.0.0.8
+[app]
+10.0.0.7
+[db]
+10.0.0.10
+[ansadmin@master-server ansible]$ ansible all -m ping
+# yum package
+only use in linux server
+apt only user in ubuntu server
+install git in web server 
+---
+- name: install package-playbook  
+  hosts: web
+  become: true
+  tasks:
+  - name: install-git
+    yum:
+      name: git
+      state: installed
+      # host only web ip addre
+      [ansadmin@master-server ansible]$ sudo vi install-package.yml
+[ansadmin@master-server ansible]$ ansible-playbook  install-package.yml
+
+PLAY [install package-playbook] *********************************************************************************************************************
+
+TASK [Gathering Facts] ******************************************************************************************************************************
+ok: [10.0.0.8]
+
+TASK [install-git] **********************************************************************************************************************************
+ok: [10.0.0.8]
+
+PLAY RECAP ******************************************************************************************************************************************
+10.0.0.8                   : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+ Only installed in web server-10.0.0.8
+
+# file module
+search in google file module
+---
+- name: create file-playbook
+  hosts: all
+  become: true
+  tasks:
+  - name: create file 
+    file:
+      path: /home/ansadmin/file1
+      state: touch
+ $ sudo vi create-file.yml
+[ansadmin@master-server ansible]$ ansible-playbook   create-file.yml
+
+PLAY [create file-playbook] *************************************************************************************************************************
+
+TASK [Gathering Facts] ******************************************************************************************************************************
+ok: [10.0.0.8]
+ok: [10.0.0.10]
+ok: [10.0.0.7]
+
+TASK [create file] **********************************************************************************************************************************
+changed: [10.0.0.10]
+changed: [10.0.0.8]
+changed: [10.0.0.7]
+
+PLAY RECAP ******************************************************************************************************************************************
+10.0.0.10                  : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+10.0.0.7                   : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+10.0.0.8                   : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+# check in server ansadmin@ubuntu-manged:~$ ls
+file1
+
+# directory 
+---
+- name: craete-directory
+  hosts: all
+  become: true
+  tasks:
+  - name: create craete-dir 
+    file:
+      path: /home/ansadmin/dir1
+      state: directory 
+      sudo vi create-file.yml
+      ansible-playbook   create-file.yml
+
+chectk it server - ansadmin@ubuntu-manged:~$ ls
+                   dir1  file1
+    remove-directory
+    sudo cp  create-directory.yml remove-dir.yml    same date copy create directory to remove dir
+    ---
+- name: craete-directory
+  hosts: all
+  become: true
+  tasks:
+  - name: create craete-dir
+    file:
+      path: /home/ansadmin/dir1
+      state: absent
+
+ $ sudo vi create-directory.yml
+ $ ansible-playbook  remove-dir.yml
+ check it ansadmin@ubuntu-manged:~$ ls
+           file1
+ $ ansadmin@ubuntu-manged:~$ ls -lrt
+total 0
+-rw-r--r-- 1 root root 0 Jul  8 06:42 file1     -view time also command -lrt
+
