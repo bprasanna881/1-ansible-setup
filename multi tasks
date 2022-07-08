@@ -1,0 +1,77 @@
+sudo vi index.html
+<h1>Welcome to ITasCode</h1>
+
+# copy module
+---
+- name: copy index.html file
+  hosts: all
+  become: true
+  tasks:
+  - name: copy html.index file 
+    copy:
+      src: /opt/ansible/index.html
+      dest: /home/ansadmin
+      mode: 755
+      owner: appuser22
+   $ sudo vi copy-file.yml
+   $ ansible-playbook copy-file.yml
+   check in servers 
+                   ansadmin@ubuntu-manged:~$ pwd
+                  /home/ansadmin
+                   sadmin@ubuntu-manged:~$ ls
+                   file1  index.html
+# multi tasks
+
+$ sudo vi install-httpd.yml
+ ---
+- name: install apache
+  hosts: webservers
+  become: true
+  tasks:
+# install httpd app 
+  - name: install httpd
+    yum:
+      name: httpd 
+      state: installed
+# strat service
+  - name: start service
+    service: 
+      name: httpd
+      state: started    
+ $ ansible-playbook copy-file.yml
+to check server http://20.27.34.163/ view apche http server
+
+# uninstall httpd
+---
+- name: uninstall application
+  hosts: webservers
+  become: true
+  tasks:
+  - name: stop service
+    service:
+      name: httpd
+      state: stopped
+  - name: uninstall app 
+    yum:
+      name: httpd 
+      state: removed    
+ $ sudo vi uninstall-httpd.yml
+ $ ansible-playbook uninstall-httpd.yml
+ # install apche ubuntu
+$ sudo vi install-apache-ubuntu.yml
+  ---
+- name: Playbook to install apache2 application
+  hosts: dbservers
+  become: true
+  tasks:
+  - name: install apache2
+    apt:
+      name: apache2
+      state: present
+
+  - name: start service apache2
+    service:
+      name: apache2
+      state: started
+   check ubuntu ip address and check ii
+
