@@ -1,0 +1,30 @@
+# take ubuntu os
+appadmin@ubuntunode:~$ sudo su -
+root@ubuntunode:~# hostname ubuntu-manged
+root@ubuntunode:~# vi /etc/hostname    update name :ubuntu-manged
+root@ubuntunode:~# useradd -m -d /home/ansadmin ansadmin    - user add diff  in ubuntu os
+root@ubuntunode:~# passwd ansadmin 
+ vi /etc/sudoers
+root    ALL=(ALL:ALL) ALL
+ansadmin ALL=(ALL)     NOPASSWD: ALL
+vi /etc/ssh/sshd_config
+PasswordAuthentication yes
+#PermitEmptyPasswords no
+$  service sshd reload
+
+# update ip service in to master node
+sudo vi hosts
+ ssh-copy-id   10.0.0.10
+if we stop vm and re update  ip addres 10.0.0.7  10.0.0.9 etc 
+# update group like below mentio
+[web]
+10.0.0.8
+[app]
+10.0.0.7
+[db]
+10.0.0.10
+come to custmized hosts
+[ansadmin@master-server ansible]$ cd /opt/ansible
+[ansadmin@master-server ansible]$ ls
+create-user.yml
+[ansadmin@master-server ansible]$ sudo vi hosts
