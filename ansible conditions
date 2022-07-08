@@ -1,0 +1,106 @@
+# notify and handlers
+sudo vi install-httpd-notify.yml
+---
+- name: install app with notify and handlers
+  hosts: webservers
+  become: true
+  tasks:
+    - name: install httpd
+      yum:
+        name: httpd
+        state: installed
+      notify: start service httpd
+  handlers:
+    - name: start service httpd
+      service:
+        name: httpd
+        state: started
+ check ip addr
+# gatherfacts
+not recommanded based on organization only time save purpose only
+---
+- name: install app with notify and handlers
+  hosts: webservers
+  become: true
+  gather_facts: no
+  tasks:
+    - name: install httpd
+      yum:
+        name: httpd
+        state: installed
+      notify: start service httpd
+  handlers:
+    - name: start service httpd
+      service:
+        name: httpd
+        state: started
+ $ sudo vi gatherfacts.yml
+ $ ansible-playbook  gatherfacts.yml
+
+# conditions
+only based on os installation 
+---
+- name: install apache using when condition
+  hosts: all 
+  become: true
+  tasks:
+# install app and start service - Redhat
+  - name: install httpd
+    yum:
+      name: httpd
+      state: installed 
+    when: ansible_os_family=="RedHat"
+  - name: start service httpd 
+    service:
+      name: httpd 
+      state: started
+    when: ansible_os_family=="RedHat"  
+
+# install app and start service - ubuntu    
+
+  - name: install apache2 
+    apt:
+      name: apache2 
+      state: present 
+    when: ansible_os_family=="Debian" 
+  - name: start service apache2 
+    service: 
+      name: apache2 
+      state: started 
+    when: ansible_os_family=="Debian"  
+    
+    sudo vi install-httpd-apache2-when.yml
+    ansible-playbook install-httpd-apache2-when.yml
+PLAY [install apache using when condition] **********************************************************************************************************
+
+TASK [Gathering Facts] ******************************************************************************************************************************
+ok: [10.0.0.7]
+ok: [10.0.0.8]
+ok: [10.0.0.10]
+
+TASK [install httpd] ********************************************************************************************************************************
+skipping: [10.0.0.10]
+changed: [10.0.0.8]     - redhat
+changed: [10.0.0.7]     - redhat
+
+TASK [start service httpd] **************************************************************************************************************************
+skipping: [10.0.0.10]
+changed: [10.0.0.7]
+changed: [10.0.0.8]
+
+TASK [install apache2] ******************************************************************************************************************************
+skipping: [10.0.0.8]
+skipping: [10.0.0.7]
+ok: [10.0.0.10]     - daiben
+
+TASK [start service apache2] ************************************************************************************************************************
+skipping: [10.0.0.8]
+skipping: [10.0.0.7]
+ok: [10.0.0.10]
+
+PLAY RECAP ******************************************************************************************************************************************
+10.0.0.10                  : ok=3    changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0
+10.0.0.7                   : ok=3    changed=2    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0
+10.0.0.8                   : ok=3    changed=2    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0
+observ we have 2 redhat and 1 diaben 
+  check ip address
