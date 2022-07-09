@@ -5,17 +5,17 @@
 useradd ansadmin     
 passwd ansadmin     -add password like Appadmin1234@
 #ADD USER
--visudo   
+$ visudo   
 >root =all below 
 > ansadmin ALL=(ALL)     NOPASSWD: ALL
 #key gen in root 
-ssh key-gen 
+$ ssh key-gen 
 #permission changes 
 > vi /etc/ssh/sshd_config   
 > PasswordAuthentication yes
  #PermitEmptyPasswords no 
  #PasswordAuthentication no > 
- service sshd restart     -type this command
+ $ service sshd restart     -type this command
 #install ansbile
   yum install python
   sudo yum install epel-release
@@ -35,7 +35,7 @@ ssh key-gen
 useradd ansadmin     
 passwd ansadmin     -add password like Appadmin1234@
 #ADD USER
--visudo   
+$ visudo   
 >root =all below 
 > ansadmin ALL=(ALL)     NOPASSWD: ALL
 #permission changes 
@@ -43,7 +43,7 @@ passwd ansadmin     -add password like Appadmin1234@
 > PasswordAuthentication yes
  #PermitEmptyPasswords no 
  #PasswordAuthentication no >
-service sshd restart     -type this command
+$ service sshd restart     -type this command
 ip addr -type this command
 take ip address
 
