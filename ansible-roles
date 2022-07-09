@@ -1,0 +1,67 @@
+install-httpd-apache2-when-copy-tags.yml
+---
+- name: install apache using when condition
+  hosts: all 
+  become: true
+  tasks:
+# install app and start service - Redhat
+  - name: install httpd
+    yum:
+      name: httpd
+      state: installed 
+    when: ansible_os_family=="RedHat"
+    tags: install_app
+  - name: start service httpd 
+    service:
+      name: httpd 
+      state: started
+    when: ansible_os_family=="RedHat"
+    tags: start_service  
+
+# install app and start service - ubuntu    
+
+  - name: install apache2 
+    apt:
+      name: apache2 
+      state: present 
+    when: ansible_os_family=="Debian"
+    tags: install_app 
+  - name: start service apache2 
+    service: 
+      name: apache2 
+      state: started 
+    when: ansible_os_family=="Debian"
+    tags: start_service 
+# copy index.html file
+  - name: copy index.html
+    copy:
+      src: /opt/ansible/index.html
+      dest: /var/www/html
+      mode: 0777
+$ sudo vi install-httpd-apache2-when-copy-tags.yml
+$ ansible-playbook install-httpd-apache2-when-copy-tags.yml --tags "install-app"
+$ ansible-playbook install-httpd-apache2-when-copy-tags.yml --tags "start-service
+
+# error_ignore using some cases
+# install app and start service - Redhat
+  - name: install httpd
+    yum:
+      name: httpd
+      state: installed
+    when: ansible_os_family=="RedHat"
+    tags: install_app
+  - name: start service httpd
+    service:
+      name: httpd
+      state: started
+    when: ansible_os_family=="RedHat"
+    ignore_errors: yes------ see thid option
+    tags: start_service
+after run the applications automatically
+
+# ansible roles
+ansible galaxy roles search in google
+realtime using roles is best option eg ansible-galaxy install datadog.datadog
+just install the command we will run the applications 
+create custmized role
+$ sudo ansible-galaxy install datadog.datadog
