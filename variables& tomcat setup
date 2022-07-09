@@ -1,0 +1,56 @@
+var-user-file.yml
+---
+- name: user with var file 
+  hosts: all 
+  become: true 
+  vars_files:
+    - user.yml
+  tasks:
+  - name: create user 
+    user:
+      name: "{{ user }}"   .
+      
+      user.yml
+      user: devopsengineer
+      
+     sudo vi var-user-file.yml
+      sudo vi user.yml
+    ansible-playbook var-user.yml
+ cat /etc/passwd
+devopsengineer:x:1005:1005::/home/devopsengineer:/bin/bash  -view this user
+we dont distrub mani file we can change use file 
+
+#setup tom cat
+
+---
+- name: tomcat setup
+  hosts: all 
+  become: true 
+  tasks:
+  - name: install java on redhat servers
+    yum:
+      name: java 
+      state: installed
+    when: ansible_os_family=="RedHat"
+  - name: install java on debian servers 
+    apt:
+      name: default-jdk 
+      state: present
+    when: ansible_os_family=="Debian"
+  - name: download tomcat 
+    get_url:
+      url: https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.78/bin/apache-tomcat-8.5.78.tar.gz
+      dest: /opt 
+  - name: unzip package 
+    unarchive:
+      src: /opt/apache-tomcat-8.5.78.tar.gz
+      dest: /opt 
+      remote_src: yes 
+  - name: add permissions 
+    file: 
+      path: /opt/apache-tomcat-8.5.78/bin/startup.sh
+      mode: 0777
+  - name: start service
+    shell: nohup ./startup.sh 
+    args:
+      chdir: /opt/apache-tomcat-8.5.78/bin    
