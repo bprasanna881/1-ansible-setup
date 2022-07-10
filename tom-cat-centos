@@ -19,3 +19,20 @@ $ ansible-galaxy install zaxos.tomcat-ansible-role
 
 ansible-playbook role-tom.yml
 http://20.89.17.65:8080     must allow inboun rules in server and access
+ 
+ # un install 
+ sudo vi uninstall.yml
+ - hosts: all
+  become: true
+  vars:
+    tomcat_state: absent
+    tomcat_uninstall_create_backup: True
+    tomcat_uninstall_remove_java: False
+    tomcat_uninstall_remove_user: True
+    tomcat_uninstall_remove_group: True
+    tomcat_uninstall_remove_all: True
+
+  roles:
+    - role: zaxos.tomcat-ansible-role
+$ ansible-playbook uninstalltom.yml
+check it server
