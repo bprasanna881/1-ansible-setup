@@ -59,9 +59,4 @@ $ ansible-playbook install-httpd-apache2-when-copy-tags.yml --tags "start-servic
     tags: start_service
 after run the applications automatically
 
-# ansible roles
-ansible galaxy roles search in google
-realtime using roles is best option eg ansible-galaxy install datadog.datadog
-just install the command we will run the applications 
-create custmized role
-$ sudo ansible-galaxy install datadog.datadog
+
