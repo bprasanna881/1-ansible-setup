@@ -1,0 +1,109 @@
+# ansible roles
+ansible galaxy roles search in google
+realtime using roles is best option eg ansible-galaxy install datadog.datadog
+just install the command we will run the applications 
+create custmized role
+$ sudo ansible-galaxy install datadog.datadog
+
+[ansadmin@control-node ansible]$ cd setup-app/
+[ansadmin@control-node setup-app]$ ls
+defaults  files  handlers  meta  README.md  tasks  templates  tests  vars
+[ansadmin@control-node setup-app]$ cd defaults
+[ansadmin@control-node defaults]$ ls
+main.yml
+[ansadmin@control-node defaults]$ cat main.yml
+---
+# defaults file for setup-app[ansadmin@control-node defaults]$
+$ sudo yum install tree
+[ansadmin@control-node setup-app]$ tree
+.
+├── defaults
+│   └── main.yml
+├── files
+├── handlers
+│   └── main.yml
+├── meta
+│   └── main.yml
+├── README.md
+├── tasks
+│   └── main.yml
+├── templates
+├── tests
+│   ├── inventory
+│   └── test.yml
+└── vars
+    └── main.yml
+[ansadmin@control-node tasks]$ sudo vi main.yml
+     - name: install httpd
+    yum:
+      name: httpd
+      state: installed 
+    when: ansible_os_family=="RedHat"
+    notify: start service httpd
+  - name: install apache2 
+    apt:
+      name: apache2 
+      state: present 
+    when: ansible_os_family=="Debian"
+    notify: start service apache2
+
+  - name: copy index.html
+    copy:
+      src: /opt/ansible/index.html
+      dest: /var/www/html
+      mode: 0777 
+    
+[ansadmin@control-node tasks]$ cd ..
+[ansadmin@control-node setup-app]$ ls
+defaults  files  handlers  meta  README.md  tasks  templates  tests  vars
+[ansadmin@control-node setup-app]$ cd handlers/
+[ansadmin@control-node handlers]$ ls
+main.yml
+[ansadmin@control-node handlers]$ sudo vi main.yml
+    - name: start service apache2 
+    service: 
+      name: apache2 
+      state: started 
+    when: ansible_os_family=="Debian"
+  - name: start service httpd 
+    service:
+      name: httpd 
+      state: started
+    when: ansible_os_family=="RedHat"   
+    
+# copy index file from cd/etc/ansible to cd/etc/ansible/setup-app/files
+[ansadmin@control-node handlers]$ cd ..
+[ansadmin@control-node setup-app]$ cd ..
+[ansadmin@control-node ansible]$ ls
+ansible.cfg  index.html                                mytomcat-setup.yml  setup-app            tomcat-setupgal.yml  uninstall2.yml  uninstall.yml
+hosts        install-httpd-apache2-when-copy-tags.yml  roles               tomcat-playbook.yml  tomcat-setup.yml     uninstall4.yml
+[ansadmin@control-node ansible]$ cd files/
+-bash: cd: files/: No such file or directory
+[ansadmin@control-node ansible]$ cd setup-app/
+[ansadmin@control-node setup-app]$ cd files/
+[ansadmin@control-node files]$ pwd
+/etc/ansible/setup-app/files
+[ansadmin@control-node files]$ cd ..
+[ansadmin@control-node setup-app]$ cd ..
+[ansadmin@control-node ansible]$ ls
+ansible.cfg  index.html                                mytomcat-setup.yml  setup-app            tomcat-setupgal.yml  uninstall2.yml  uninstall.yml
+hosts        install-httpd-apache2-when-copy-tags.yml  roles               tomcat-playbook.yml  tomcat-setup.yml     uninstall4.yml
+[ansadmin@control-node ansible]$ copy index.html /etc/ansible/setup-app/files
+-bash: copy: command not found
+[ansadmin@control-node ansible]$ cp index.html /etc/ansible/setup-app/files
+cp: cannot create regular file ‘/etc/ansible/setup-app/files/index.html’: Permission denied
+[ansadmin@control-node ansible]$ sudo cp index.html /etc/ansible/setup-app/files
+[ansadmin@control-node ansible]$ cd /etc/ansible/setup-app/files
+[ansadmin@control-node files]$ ls
+index.html
+# remove remaining folders
+[ansadmin@control-node files]$ cd ..
+[ansadmin@control-node setup-app]$ ls
+defaults  files  handlers  meta  README.md  tasks  templates  tests  vars
+[ansadmin@control-node setup-app]$ sudo rm -rf meta templates tests vars
+[ansadmin@control-node setup-app]$ ls
+defaults  files  handlers  README.md  tasks
+
+
+
+  
