@@ -20,7 +20,7 @@ var-user-file.yml
 devopsengineer:x:1005:1005::/home/devopsengineer:/bin/bash  -view this user
 we dont distrub mani file we can change use file 
 
-#setup tom cat
+#setup tom cat rhel os you can see centios view differ folder tom-cat-centos
 
 ---
 - name: tomcat setup
