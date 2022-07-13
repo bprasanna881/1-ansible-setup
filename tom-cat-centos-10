@@ -1,4 +1,4 @@
-sudo vi role-tom.yml
+vi role-tom.yml
 $ ansible-galaxy install zaxos.tomcat-ansible-role
 - hosts: all
   become: true
